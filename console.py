@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
         parameters = split[1:]
         for values in parameters:
             second_split = values.split("=")
-            if (split[1][0] == '"'):
+            if (second_split[1][0] == '\"'):
                 new_instance.__dict__[
                     second_split[0]] = second_split[1].replace("_", " ")
         storage.save()
