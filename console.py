@@ -2,7 +2,9 @@
 """ Console Module """
 import cmd
 import sys
-from os import getenv
+import re
+import os
+import uuid
 from datetime import datetime
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -156,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
         elif class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        if getenv('HBNB_TYPE_STORAGE') == 'db':
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
             if not hasattr(obj_kwargs, 'id'):
                 obj_kwargs['id'] = str(uuid.uuid4())
             if not hasattr(obj_kwargs, 'created_at'):
