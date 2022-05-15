@@ -1,7 +1,6 @@
  #!/usr/bin/python3
 """This module defines a base class for all models in our hbnb clone"""
 
-from ast import Pass
 import uuid
 from datetime import datetime
 import sqlalchemy
@@ -29,10 +28,10 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
-            for key, value in kwargs.items():
-                if key == "name":
-                    self.name = value
-            del kwargs['__class__']
+            #for key, value in kwargs.items():
+            #    if key == "name":
+            #        self.name = value
+            #del kwargs['__class__']
             self.__dict__.update(kwargs)
 
     def __str__(self):
@@ -54,7 +53,7 @@ class BaseModel:
         try:
             del dictionary['_sa_instance_state']
         except Exception:
-            Pass
+            pass
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
