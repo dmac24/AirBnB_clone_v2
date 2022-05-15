@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Module that dfine State class
+"""
 import os
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
