@@ -1,5 +1,7 @@
- #!/usr/bin/python3
-"""This module defines a base class for all models in our hbnb clone"""
+#!/usr/bin/python3
+"""This module defines a base class for
+all models in our hbnb clone
+"""
 
 import uuid
 from datetime import datetime
@@ -8,6 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
 
 Base = declarative_base()
+
 
 class BaseModel:
     """Attributes to construct table in database"""
@@ -28,10 +31,10 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
-            #for key, value in kwargs.items():
+            #   for key, value in kwargs.items():
             #    if key == "name":
             #        self.name = value
-            #del kwargs['__class__']
+            #   del kwargs['__class__']
             self.__dict__.update(kwargs)
 
     def __str__(self):
