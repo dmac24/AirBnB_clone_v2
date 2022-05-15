@@ -2,7 +2,6 @@
 """This module defines a base class for
 all models in our hbnb clone
 """
-"""This module defines a base class for all models in our hbnb clone"""
 import os
 import uuid
 from datetime import datetime
