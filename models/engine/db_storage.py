@@ -4,7 +4,6 @@ storage for hbnb clone"""
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-import urllib.parse
 
 from models.base_model import BaseModel, Base
 from models.state import State
@@ -85,7 +84,3 @@ class DBStorage:
             expire_on_commit=False
         )
         self.__session = scoped_session(SessionFactory)()
-
-    def close(self):
-        """Closes the storage engine."""
-        self.__session.close()
