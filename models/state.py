@@ -1,7 +1,4 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
-
-""" State Module for HBNB project """
 import os
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
