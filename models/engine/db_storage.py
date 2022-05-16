@@ -65,9 +65,7 @@ class DBStorage:
         """Adds new object to storage database"""
         if obj is not None:
             self.__session.add(obj)
-            self.__session.flush()
-            self.__session.refresh(obj)
-
+            self.save()
     def save(self):
         """Commits the session changes to database"""
         self.__session.commit()
