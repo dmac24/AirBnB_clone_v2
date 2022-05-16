@@ -205,8 +205,8 @@ class HBNBCommand(cmd.Cmd):
 
         key = c_name + "." + c_id
         try:
-            print(storage._FileStorage__objects[key])
-        except KeyError:
+            print(storage.__objects[key])
+        except Exception:
             print("** no instance found **")
 
     def help_show(self):
@@ -273,7 +273,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """Count current number of class instances"""
         count = 0
-        for k, v in storage._FileStorage__objects.items():
+        for k, v in storage.__objects.items():
             if args == k.split('.')[0]:
                 count += 1
         print(count)
