@@ -4,7 +4,7 @@ from os import getenv
 from tkinter import CASCADE
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 
 class User(BaseModel, Base):
