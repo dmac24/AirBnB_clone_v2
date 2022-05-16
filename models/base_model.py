@@ -57,12 +57,15 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format"""
-        res = {}
-        for key, value in self.__dict__.items():
-            if key != '_sa_instance_state':
-                if isinstance(value, datetime):
-                    res[key] = value.isoformat()
-                else:
-                    res[key] = value
-        res['__class__'] = self.__class__.__name__
-        return res
+        dictionary = {}
+        dictionary.update(self.__dict__)
+
+        try:
+            del dictionary['_sa_instance_state']
+        except Exception:
+            pass
+        dictionary.update({'__class__':
+                          (str(type(self)).split('.')[-1]).split('\'')[0]})
+        dictionary['created_at'] = self.created_at.isoformat()
+        dictionary['updated_at'] = self.updated_at.isoformat()
+        return dictionary
