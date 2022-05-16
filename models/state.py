@@ -14,12 +14,13 @@ class State(BaseModel, Base):
     type_of_storage = getenv('HBNB_TYPE_STORAGE')
     __tablename__ = 'states'
 
-    if type_of_storage =='db':
+    if type_of_storage == 'db':
         name = Column(String(128), nullable=False)
         cities = relationship('City', cascade='all, delete, delete-orphan',
                               backref='state')
     else:
         name = ''
+
         @property
         def cities(self):
             """Returns the cities in this State"""
