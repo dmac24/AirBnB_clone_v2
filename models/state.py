@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Module that dfine State class
 """
-import os
+from os import getenv
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
@@ -11,17 +11,15 @@ from models.city import City
 
 class State(BaseModel, Base):
     """ State class """
+    type_of_storage = getenv('HBNB_TYPE_STORAGE')
     __tablename__ = 'states'
-    name = Column(
-        String(128), nullable=False
-    ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
-    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        cities = relationship(
-            'City',
-            cascade='all, delete, delete-orphan',
-            backref='state'
-        )
+
+    if type_of_storage =='db':
+        name = Column(String(128), nullable=False)
+        cities = relationship('City', cascade='all, delete, delete-orphan',
+                              backref='state')
     else:
+        name = ''
         @property
         def cities(self):
             """Returns the cities in this State"""
