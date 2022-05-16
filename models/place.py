@@ -4,6 +4,7 @@
 from os import getenv
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from models.review import Review
 
 
 class Place(BaseModel, Base):
@@ -35,3 +36,12 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+        
+        @property
+        def reviews(self):
+            """ Get Reviews """
+            list_reviews = []
+            for review in list(storage.all(Review).values()):
+                if self.id == review.place_id:
+                    list_reviews.append(review)
+            return list_reviews
