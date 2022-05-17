@@ -1,9 +1,9 @@
-
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from os import getenv
+
 from models.base_model import Base, BaseModel
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from models.review import Review
 from sqlalchemy.orm import relationship
 
@@ -12,6 +12,16 @@ class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
     type_storage = getenv('HBNB_TYPE_STORAGE')
+    metadata = Base.metadata
+    place_amenity = Table("place_amenity", metadata,
+                          Column("place_id", String(60),
+                                 ForeignKey('places.id'),
+                                 primary_key=True,
+                                 nullable=False),
+                          Column("amenity_id", String(60),
+                                 ForeignKey('amenities.id'),
+                                 primary_key=True,
+                                 nullable=False))
 
     if type_storage == 'db':
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
@@ -26,6 +36,8 @@ class Place(BaseModel, Base):
         longitude = Column(Float, nullable=True)
         reviews = relationship('Review', cascade="all, delete, delete-orphan",
                                backref='place')
+        amenities = relationship(
+            'Amenity', secondary='place_amenity', viewonly=False)
 
     else:
         city_id = ""
@@ -42,7 +54,7 @@ class Place(BaseModel, Base):
 
         @property
         def reviews(self):
-            """ Get list of Reviews with the 
+            """ Get list of Reviews with the
             same id that the currently place
             """
             from models import storage
@@ -51,3 +63,14 @@ class Place(BaseModel, Base):
                 if self.id == review.place_id:
                     list_reviews.append(review)
             return list_reviews
+
+        @property
+        def amenities(self):
+            from models import storage
+            return self.amenity_ids
+
+        @amenities.setter
+        def amenities(self, cls):
+            from models.amenity import Amenity
+            if cls.__class__ == Amenity:
+                self.amenity_ids.append(cls.id)
