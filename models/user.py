@@ -4,7 +4,8 @@ from os import getenv
 from tkinter import CASCADE
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
+
 
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
@@ -17,6 +18,8 @@ class User(BaseModel, Base):
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
         places = relationship('Place', cascade="all, delete, delete-orphan",
+                              backref='user')
+        reviews = relationship('Review', cascade="all, delete, delete-orphan"
                               backref='user')
     else:
         email = ''
