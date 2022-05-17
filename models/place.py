@@ -2,7 +2,6 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from os import getenv
-from models import storage
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from models.review import Review
@@ -43,7 +42,10 @@ class Place(BaseModel, Base):
 
         @property
         def reviews(self):
-            """ Get Reviews """
+            """ Get list of Reviews with the 
+            same id that the currently place
+            """
+            from models import storage
             list_reviews = []
             for review in storage.all(Review).values():
                 if self.id == review.place_id:
