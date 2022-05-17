@@ -26,13 +26,10 @@ class DBStorage:
         host = os.getenv('HBNB_MYSQL_HOST')
         db_name = os.getenv('HBNB_MYSQL_DB')
         env = os.getenv('HBNB_ENV')
-        DATABASE_URL = "mysql+mysqldb://{}:{}@{}:3306/{}".format(
-            user, pword, host, db_name
-        )
-        self.__engine = create_engine(
-            DATABASE_URL,
-            pool_pre_ping=True
-        )
+        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}:3306/{}"
+                                      .format(user, pword, host, db_name),
+                                      pool_pre_ping=True)
+
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -56,16 +53,16 @@ class DBStorage:
     def delete(self, obj=None):
         """Removes an object from the storage database"""
         if obj is not None:
-            self.__session.query(type(obj)).filter(
-                type(obj).id == obj.id).delete(
-                synchronize_session=False
-            )
+            self.__session.query(type(obj)).filter
+            (type(obj).id == obj.id) \
+                .delete(synchronize_session=False)
 
     def new(self, obj):
         """Adds new object to storage database"""
         if obj is not None:
             self.__session.add(obj)
-            self.save()
+            # self.save()
+
     def save(self):
         """Commits the session changes to database"""
         self.__session.commit()
@@ -73,8 +70,6 @@ class DBStorage:
     def reload(self):
         """Loads storage database"""
         Base.metadata.create_all(self.__engine)
-        SessionFactory = sessionmaker(
-            bind=self.__engine,
-            expire_on_commit=False
-        )
+        SessionFactory = sessionmaker(bind=self.__engine,
+                                      expire_on_commit=False)
         self.__session = scoped_session(SessionFactory)()
