@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ City Module for HBNB project """
 from os import getenv
-from tkinter import CASCADE
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
