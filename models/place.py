@@ -42,10 +42,10 @@ class Place(BaseModel, Base):
         amenity_ids = []
 
         @property
-
         def reviews(self):
-            list_review = []
-            for key, value in storage.all(Review).items():
-                if key.place_id == self.id:
-                    list_review.append(key)
-            return list_review
+            """ Get Reviews """
+            list_reviews = []
+            for review in list(storage.all(Review).values()):
+                if self.id == review.place_id:
+                    list_reviews.append(review)
+            return list_reviews
