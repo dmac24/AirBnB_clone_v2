@@ -45,7 +45,7 @@ class Place(BaseModel, Base):
         def reviews(self):
             """ Get Reviews """
             list_reviews = []
-            for review in list(storage.all(Review).values()):
+            for review in storage.all(Review).values():
                 if self.id == review.place_id:
                     list_reviews.append(review)
             return list_reviews
