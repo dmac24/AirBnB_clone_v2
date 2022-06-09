@@ -11,6 +11,7 @@ def main():
     """ Display text """
     return 'Hello HBNB!'
 
+
 @app.route('/hbnb')
 def main_hbnb():
     """ Display text """
